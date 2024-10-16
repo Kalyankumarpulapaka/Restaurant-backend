@@ -1,5 +1,5 @@
 
-## Installation
+# Installation
 
 
 1. Clone the repository:
@@ -8,16 +8,20 @@
    cd restaurant-api
 Install the dependencies:
 
+```
 bash
 Copy code
 npm install
+```
 Set up the environment variables in a .env file (see the next section for details).
 
 Run the application:
 
+```
 bash
 Copy code
 npm start
+```
 Environment Variables
 Create a .env file in the root directory with the following environment variables:
 
@@ -26,6 +30,7 @@ makefile
 *  MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/your-db?retryWrites=true&w=majority
 JWT_SECRET=your_jwt_secret
 PORT=5000
+
  *  MONGO_URI: Your MongoDB Atlas connection string
 *  JWT_SECRET: Secret key used for signing JWT tokens
 PORT: The port where the server will run (default: 5000)
@@ -33,8 +38,10 @@ csharp
 
 You can copy and paste this directly into your `README.md` file.
 
----------------
 
+## Project Structure
+
+<img src="./utils/sc.jpg" alt="file " width="600" />
 
 ## API Endpoints
 

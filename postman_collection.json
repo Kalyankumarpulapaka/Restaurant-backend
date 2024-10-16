@@ -1,0 +1,282 @@
+{
+    "info": {
+      "name": "Restaurant API",
+      "description": "Postman collection for testing the Restaurant API",
+      "_postman_id": "your-postman-id",
+      "version": "1.0.0",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "User Authentication",
+        "item": [
+          {
+            "name": "Register User",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"yourpassword\"}"
+              },
+              "url": {
+                "raw": "http://localhost:5000/api/auth/register",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "auth",
+                  "register"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 201,
+                "body": "{\"message\": \"User registered successfully\"}"
+              }
+            ]
+          },
+          {
+            "name": "Login User",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"email\": \"john@example.com\", \"password\": \"yourpassword\"}"
+              },
+              "url": {
+                "raw": "http://localhost:5000/api/auth/login",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "auth",
+                  "login"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 200,
+                "body": "{\"token\": \"your_jwt_token\"}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Restaurants",
+        "item": [
+          {
+            "name": "Create Restaurant",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\": \"Restaurant A\", \"description\": \"A cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"ratings\": [4, 5, 3]}"
+              },
+              "url": {
+                "raw": "http://localhost:5000/api/restaurants",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "restaurants"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 201,
+                "body": "{\"message\": \"Restaurant created successfully\", \"restaurant\": {\"_id\": \"restaurant_id\", \"name\": \"Restaurant A\", \"description\": \"A cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"ratings\": [4, 5, 3], \"__v\": 0}}"
+              }
+            ]
+          },
+          {
+            "name": "Get All Restaurants",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://localhost:5000/api/restaurants",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "restaurants"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 200,
+                "body": "[{\"_id\": \"restaurant_id\", \"name\": \"Restaurant A\", \"description\": \"A cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"ratings\": [4, 5, 3], \"__v\": 0}]"
+              }
+            ]
+          },
+          {
+            "name": "Get Restaurants by Proximity",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"latitude\": 17.343242, \"longitude\": 78.342343, \"radius\": 500}"
+              },
+              "url": {
+                "raw": "http://localhost:5000/api/restaurants/proximity",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "restaurants",
+                  "proximity"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 200,
+                "body": "[{\"name\": \"Restaurant A\", \"description\": \"A cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"averageRating\": 4.5, \"noOfRatings\": 3}]"
+              }
+            ]
+          },
+          {
+            "name": "Get Restaurants Within Range",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"latitude\": 17.343242, \"longitude\": 78.342343, \"minimumDistance\": 500, \"maximumDistance\": 2000}"
+              },
+              "url": {
+                "raw": "http://localhost:5000/api/restaurants/range",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "restaurants",
+                  "range"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 200,
+                "body": "[{\"name\": \"Restaurant A\", \"description\": \"A cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"averageRating\": 4.5, \"noOfRatings\": 3}]"
+              }
+            ]
+          },
+          {
+            "name": "Update Restaurant",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\": \"Updated Restaurant\", \"description\": \"An updated cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"ratings\": [5, 4, 4]}"
+              },
+              "url": {
+                "raw": "http://localhost:5000/api/restaurants/restaurant_id",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "restaurants",
+                  "restaurant_id"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 200,
+                "body": "{\"message\": \"Restaurant updated successfully\", \"restaurant\": {\"_id\": \"restaurant_id\", \"name\": \"Updated Restaurant\", \"description\": \"An updated cozy place.\", \"location\": {\"latitude\": 17.343242, \"longitude\": 78.342343}, \"ratings\": [5, 4, 4], \"__v\": 0}}"
+              }
+            ]
+          },
+          {
+            "name": "Delete Restaurant",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "http://localhost:5000/api/restaurants/restaurant_id",
+                "protocol": "http",
+                "host": [
+                  "localhost"
+                ],
+                "port": "5000",
+                "path": [
+                  "api",
+                  "restaurants",
+                  "restaurant_id"
+                ]
+              }
+            },
+            "response": [
+              {
+                "code": 200,
+                "body": "{\"message\": \"Restaurant deleted successfully\"}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  
