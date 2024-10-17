@@ -227,7 +227,7 @@ Headers:  Authorization: Bearer <your-jwt-token>
 
 ``` 
 ### Response
-<img src="./images/getall.jpg" alt="file " width="1000"/>
+<img src="./images/getall.jpg" alt="file " width="800"/>
 
 
 ## 5. Update a Restaurant (Protected Route)
