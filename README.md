@@ -9,8 +9,7 @@
 Install the dependencies:
 
 ```
-bash
-Copy code
+
 npm install
 ```
 Set up the environment variables in a .env file (see the next section for details).
@@ -18,8 +17,7 @@ Set up the environment variables in a .env file (see the next section for detail
 Run the application:
 
 ```
-bash
-Copy code
+
 npm start
 ```
 Environment Variables
@@ -45,29 +43,35 @@ You can copy and paste this directly into your `README.md` file.
 
 ## API Endpoints
 
-### Authentication
+### Authentication 🔐
 
 | Method | Endpoint            | Description                       |
 |--------|---------------------|-----------------------------------|
-| POST   | /api/auth/register  | Register a new user              |
-| POST   | /api/auth/login     | Log in and get a JWT token       |
+| POST   | /api/auth/register  | Register a new user 📝           |
+| POST   | /api/auth/login     | Log in and get a JWT token  🔑   |
 
 ### Restaurant Operations
 
-| Method | Endpoint                 | Description                            |
-|--------|--------------------------|----------------------------------------|
-| POST   | /api/restaurants         | Create a new restaurant (protected)   |
-| GET    | /api/restaurants         | Get a list of all restaurants         |
-| PUT    | /api/restaurants/:id     | Update a restaurant by ID (protected) |
-| DELETE | /api/restaurants/:id     | Delete a restaurant by ID (protected) |
+| Method | Endpoint                 | Description                               |
+|--------|--------------------------|-------------------------------------------|
+| POST   | /api/restaurants         | Create a new restaurant (protected) ➕   |
+| GET    | /api/restaurants         | Get a list of all restaurants     📋     |
+| PUT    | /api/restaurants/:id     | Update a restaurant by ID (protected) ✏️ |
+| DELETE | /api/restaurants/:id     | Delete a restaurant by ID (protected) 🗑️  |
 
 
 
 
 
-## Geolocation-based Queries
+## Geolocation-based Queries 🌍
 
-### Get Restaurants Within a Distance Range
+| Method | Endpoint            | Description                                                        |
+|--------|---------------------|--------------------------------------------------------------------|
+| POST   | /api/range          | Retrieves restaurants within a specific distance range  📍         |
+| POST   | /api/proximity      | A list of restaurants within the specified radius  📏              |
+
+### Get Restaurants Within a Distance Range 📏
+
 
 - **Endpoint:** `/api/restaurants/range`
 - **Method:** `POST`
@@ -105,10 +109,60 @@ You can copy and paste this directly into your `README.md` file.
   ]
 }
 ```
+<img src="./images/range.jpg" alt="file " width="800" />
 
 
-## Postman Examples
-### 1. Register a User
+### Get Restaurants by Proximity 📍(Radius)
+
+- **Endpoint:** `/api/restaurants/proximity`
+- **Method:** `POST`
+- **Description:** A list of restaurants within the specified radius, sorted from nearest to farthest..
+
+**Input:**
+```json
+{
+"latitude": 17.343242,
+"longitude": 78.342343,
+ "radius": 500
+}
+```
+* latitude: The latitude of the user's current location.
+* longitude: The longitude of the user's current location.
+* Radius: The maximum distance (radius) in meters within which to find restaurants.
+
+### Output:
+
+```
+{
+    "message": "Restaurants retrieved by proximity successfully",
+    "restaurants": [
+        {
+            "location": {
+                "type": "Point",
+                "coordinates": [
+                    78.342386,
+                    17.343274
+                ]
+            },
+            "_id": "670f9140bbac4cc7fcc140fb",
+            "name": "kfc hotels",
+            "description": "A crazy place for tiffens.",
+            "ratings": [
+                9,
+                2,
+                2,
+                6,
+                7
+            ],
+            "__v": 0
+        },
+```
+<img src="./images/proxi.jpg" alt="file " width="800" />
+
+
+# Example Requests with Postman 📮
+
+## 1. Register a User
 * Method: POST
 * URL: http://localhost:5000/api/auth/register
 * Body: (JSON)
@@ -120,18 +174,11 @@ You can copy and paste this directly into your `README.md` file.
   "password": "password123"
 }
 ```
-### Response:   
+### Response
+<img src="./images/register.jpg" alt="file " width="800" />
 
-```
-User registered successfully
-```
-```
-{
-  "token": "<your-jwt-token>"
-}
-```
 
-### 2.Log In
+## 2.Log In a user
 * Method: POST
 * URL: http://localhost:5000/api/auth/login
 * Body: (JSON)
@@ -142,18 +189,11 @@ User registered successfully
   "password": "password123"
 }
 ```
-### Response:
-```
-Login successful
-```
+### Response
+<img src="./images/login.jpg" alt="file " width="800" />
 
-```
-{
-  "token": "<your-jwt-token>"
-}
-```
 
-### 3. Create a Restaurant (Protected Route)
+## 3. Create a Restaurant (Protected Route)
 * Method: POST
 * URL: http://localhost:5000/api/restaurants
 
@@ -172,9 +212,64 @@ Headers:  Authorization: Bearer <your-jwt-token>
     "coordinates": [78.343242, 17.343242]
   }
 }
+
+```
+### Response
+<img src="./images/cre.jpg" alt="file " width="800"/>
+
+## 4. Get list of all Restaurant (Protected Route)
+* Method: Get
+* URL: http://localhost:5000/api/restaurants
+
+```
+Headers:  Authorization: Bearer <your-jwt-token>
 ```
 
-### 4. Find Restaurants Within a Range
+``` 
+### Response
+<img src="./images/getall.jpg" alt="file " width="1000"/>
+
+
+## 5. Update a Restaurant (Protected Route)
+* Method: put
+* URL: http://localhost:5000/api/restaurants/:id 
+
+```
+Headers:  Authorization: Bearer <your-jwt-token>
+```
+
+``` 
+* Body:
+
+{
+  "name": "updated New Restaurant",
+  "description": "A great place to eat.",
+  "location": {
+    "type": "Point",
+    "coordinates": [78.343242, 17.343242]
+  }
+}
+
+```
+### Response
+<img src="./images/update.jpg" alt="file " width="800"/>
+
+
+### 6. Delate Restaurant (Protected Route)
+* Method: delate
+* URL: http://localhost:5000/api/restaurants/:id
+
+```
+Headers:  Authorization: Bearer <your-jwt-token>
+```
+
+``` 
+### Response
+<img src="./images/delate.jpg" alt="file " width="800"/>
+
+
+
+### 7.Find Restaurants Within a Range
 * Method: POST
 * URL: http://localhost:5000/api/restaurants/range
 * Body: (JSON)
@@ -191,7 +286,7 @@ Headers:  Authorization: Bearer <your-jwt-token>
 ```
 
 ```
-* Response:
+### Response
 
 json
 Copy code
@@ -211,6 +306,47 @@ Copy code
   ]
 }
 ```
+<img src="./images/range.jpg" alt="file " width="800" />
+
+### 8.Get Restaurants Within a Distance Range
+
+- **Endpoint:** `/api/restaurants/range`
+- **Method:** `POST`
+- **Description:** Retrieves restaurants within a specific distance range from a given latitude and longitude.
+
+**Input:**
+```json
+{
+  "latitude": 17.343242,
+  "longitude": 78.342343,
+  "minimumDistance": 500,
+  "maximumDistance": 2000
+}
+```
+* latitude: The latitude of the user's current location.
+* longitude: The longitude of the user's current location.
+* minimumDistance: Minimum distance in meters.
+* maximumDistance: Maximum distance in meters.
+### Output:
+
+```
+{
+  "message": "Restaurants retrieved successfully",
+  "restaurants": [
+    {
+      "name": "Restaurant B",
+      "description": "A great spot for brunch.",
+      "location": {
+        "latitude": 17.345565,
+        "longitude": 78.348900
+      },
+      "averageRating": 4.8,
+      "noOfRatings": 10
+    }
+  ]
+}
+```
+<img src="./images/proxi.jpg" alt="file " width="800" />
 
 ### Error Handling:
 
